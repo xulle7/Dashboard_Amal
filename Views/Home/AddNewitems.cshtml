@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Products>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <div class="row ">
+        <div class="col text-center">
+            <h1 class="display-4 "><span class="badge bg-light bordred text-dark">Add New Product </span> </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-center">
+            <button class="btn rounded border" style="background-color:#2563eb; color: white;" onclick="AddNewitems()"> <i class="fs-4 bi-cart-plus p-2"></i>  Add New Product</button>
+        </div>
+    </div>
+
+    
+
+<div class="modal" tabindex="-1" id="newproducts">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+                <div class="modal-header" style="background-color:#60a5fa; color: white;">
+                    <h5 class="modal-title"> Add New Product </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="CreateProducts"method="post">
+                    <div class="row">
+                        <div class="col">
+                                <label class="form-label" for="">Product Name</label>
+                            <input type="text" id="newitem" asp-for="@Model.FirstOrDefault().Name" class="form-control form-control-sm" />
+                        </div>
+                        <div class="col">
+                                <label class="form-label" for="">Product Description </label>
+                                <input type="text" id="description" asp-for="@Model.FirstOrDefault().Description" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="submit" class="btn" style="background-color:#3b82f6; color: white;" data-bs-dismiss="modal">Save Changes</button>
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="modal" tabindex="-1" id="update">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#10b981; color: white;">
+                    <h5 class="modal-title">Edit Product Details </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="Update" method="post" style="direction:ltr">
+                        <div class="row">
+                            <input type="hidden" id="Id" name="Id" class="form-control" />
+                            <div class="col-sm-6">
+                                <label for="" class="form-control">  Product Name</label>
+                                <input type="text" id="Name" name="Name" class="form-control" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="" class="form-control">Product Description </label>
+                                <input type="text" id="Description" name="Description" class="form-control" />
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button type="submit" class="btn" style="background-color:#065f46; color: white;" data-bs-dismiss="modal">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" tabindex="-1" id="confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color:#ef4444; color: white;">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete?</p>
+            </div>
+            <div class="modal-footer  d-flex justify-content-center">
+                <button type="button" class="btn" style="background-color:#dc2626; color: white;" data-bs-dismiss="modal" onclick="Confirmdel1()">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card mt-4">
+    <div class="card-body">
+        <table class="table table-bordered" style="direction:ltr">
+            <thead style="background-color:#2563eb;  color:white">
+                <tr class="text-center">
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Product Description </th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+                <tbody>
+                    @foreach (var pro in Model)
+                    {
+                        <tr class="text-center">
+                            <td>@pro.Id</td>
+                            <td>@pro.Name</td>
+                            <td>@pro.Description</td>
+                        <td> <a onclick="ShowDelMessage(@pro.Id)"> <i class="bi bi-trash3-fill" style="color:#ef4444;"></i> </a></td>
+                        <td> <a onclick="update(@pro.Id)"> <i class="bi bi-pencil-square" style="color:#10b981;"></i>  </a></td>
+                        </tr>
+                    }
+                </tbody>
+       </table>
+
+    </div>
+</div>
+
+
+
+
+</div>

@@ -1,0 +1,154 @@
+﻿@model DamageProducts
+@{
+	ViewData["Title"] = "Damage Products Page";
+}
+
+<div class="container">
+	<div class="row">
+		<div class="col text-center">
+            <h1 class="display-4"> <span class="badge bg-light bordred text-dark"> Damaged Product  </span> </h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col text-center">
+            <button class="btn" style="background-color:#2563eb; color: white;" onclick="AddNewDmg()"> <i class="fs-4 bi-cart-plus p-2"></i>   Add Damage Products</button>
+		</div>
+	</div>
+
+
+
+
+<div class="modal" tabindex="-1" id="dmgproduct">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#60a5fa; color: white;"
+                    <h5 class="modal-title"> Add New Damage Product  </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="CreateDmg" method="post" style="direction:ltr">
+                    <div class="row " style="direction:ltr">
+                
+                        <div class="col">
+                                <label class="form-label" for=""> Product Name </label>
+                            <select class="form-select" id="ProductId" asp-for="ProductId">
+                                @foreach (var pro in ViewBag.products)
+                                {
+                                    <option value="@pro.Id">@pro.Name</option>
+                                }
+                            </select>
+                        </div>
+                         <div class="col">
+                                <label class="form-label" for=""> Quantity of Damaged Product </label>
+                                <input type="text" id="description" asp-for="Qty" class="form-control form-control-sm" />
+                            </div>
+                    </div>
+                   <div class="modal-footer d-flex justify-content-center">
+                            <button type="submit" class="btn" style="background-color:#3b82f6; color: white;" data-bs-dismiss="modal">Save Changes</button>
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ </div>
+
+    <div class="modal" tabindex="-1" id="update">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#10b981; color: white;">
+                    <h5 class="modal-title">Edit Damaged Product Details</h5 </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="UpdateDmg" method="post">
+                        <div class="row " style="direction:ltr">
+
+                            <div class="col p-2">
+                                <label class="form-control" for=""> Product Name </label>
+                                <select class="form-select" id="ProductId" asp-for="ProductId">
+                                    @foreach (var pro in ViewBag.products)
+                                    {
+                                        <option value="@pro.Id">@pro.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col p-2">
+                                <label class="form-control" for=""> Quantity of Damaged Product </label>
+                                <input type="text" id="description" asp-for="Qty" class="form-control form-control-sm" />
+                            </div>
+                        </div>
+                         <div class="modal-footer d-flex justify-content-center">
+                            <button type="submit" class="btn" style="background-color:#065f46; color: white;" data-bs-dismiss="modal">Save Changes</button>
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel </button>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" tabindex="-1" id="confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#ef4444; color: white;">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete?</p>
+            </div>
+          <div class="modal-footer  d-flex justify-content-center">
+                <button type="button" class="btn" style="background-color:#dc2626; color: white;"  onclick="Confirmdel1()">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+   <div class="card mt-4">
+       <div class="card-body">
+            <table class="table table-bordered " style="direction:ltr">
+                <thead style="background-color:#2563eb;  color:white" >
+                   <tr class="text-center">
+                       <th>Product No.</th>
+                        <th>Product Name</th>
+                        <th> Product Color</th>
+                        <th>Quantity</th>
+                        <th colspan="2">Actions</th>
+                   </tr>
+               </thead>
+               <tbody>
+                    @foreach (var dmg in ViewBag.damagedProducts)
+                    {
+                        <tr class="text-center">
+                            <td>@dmg.id</td>
+                            <td>@dmg.name</td>
+                            <td>@dmg.color</td>
+                            <td>@dmg.qty</td>
+                           <td> <a onclick="ShowDelMessage(@dmg.id)"> <i class="bi bi-trash3-fill" style="color:#ef4444;"></i> </a></td>
+                        <td> <a onclick="update(@dmg.id)"> <i class="bi bi-pencil-square" style="color:#10b981;"></i>  </a></td>
+                        </tr>
+                    }
+                </tbody>
+          </table>
+       </div>
+   </div>
+
+
+</div>
